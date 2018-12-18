@@ -1,0 +1,81 @@
+package com.example.mirzo_golibsuvonberdiev.androidfinalproject.activities;
+
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.Food;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class FoodInfoActivity extends AppCompatActivity {
+
+    @BindView(R.id.food_name)
+    TextView foodName;
+    @BindView(R.id.food_price)
+    TextView foodPrice;
+    @BindView(R.id.food_descp)
+    TextView description;
+    @BindView(R.id.collapse_image)
+    ImageView foodImage;
+
+
+    @BindView(R.id.collapsing_header)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.btn_cart)
+    FloatingActionButton floatingActionButton;
+    @BindView(R.id.elegant_number)
+    ElegantNumberButton numberButton;
+
+    String foodId;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_food_info);
+        ButterKnife.bind(this);
+
+        foodId = getIntent().getStringExtra("foodId");
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(foodId);
+
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
+        loadContent();
+    }
+
+    private void loadContent() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Food food = dataSnapshot.getValue(Food.class);
+                Glide.with(FoodInfoActivity.this).load(food.getImage())
+                        .into(foodImage);
+                collapsingToolbarLayout.setTitle(food.getName());
+                foodPrice.setText(food.getPrice());
+                foodName.setText(food.getName());
+                description.setText(food.getDescription());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+}

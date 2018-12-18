@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="35" viewBox="0 0 170 35">
+    <g fill="none" fill-rule="evenodd" transform="translate(-1 -99)">
+        <rect width="170" height="35" x="1" y="99" fill="#E5293E" rx="17.5"/>
+        <path stroke="#F2F2F2" stroke-width="1.5" d="M151.5 120.5l4-4.452-4-4.548"/>
+        <text fill="#FFF" font-family=".AppleSystemUIFont" font-size="14" letter-spacing=".327">
+            <tspan x="36" y="121">START ORDER</tspan>
+        </text>
+    </g>
+</svg>
