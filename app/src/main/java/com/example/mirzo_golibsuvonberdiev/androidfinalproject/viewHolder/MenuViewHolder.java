@@ -1,5 +1,6 @@
 package com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,12 +25,15 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @BindView(R.id.item_image)
     public ImageView imageViewItem;
 
+
+
     private ItemClickListener itemClickListener;
 
     public MenuViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(this);
+
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {

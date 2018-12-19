@@ -4,6 +4,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FoodInfoActivity extends AppCompatActivity {
 
@@ -30,14 +33,16 @@ public class FoodInfoActivity extends AppCompatActivity {
     TextView description;
     @BindView(R.id.collapse_image)
     ImageView foodImage;
+    @BindView(R.id.elegant_number)
+    ElegantNumberButton elegantNumberButton;
 
+    @BindView(R.id.btn_cart)
+    FloatingActionButton fab;
 
     @BindView(R.id.collapsing_header)
     CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.btn_cart)
-    FloatingActionButton floatingActionButton;
-    @BindView(R.id.elegant_number)
-    ElegantNumberButton numberButton;
+
+
 
     String foodId;
     FirebaseDatabase firebaseDatabase;
@@ -57,7 +62,19 @@ public class FoodInfoActivity extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
         loadContent();
+
+
+
     }
+
+    @OnClick(R.id.btn_cart)
+    public void onClickCart(View view){
+
+        int i = Integer.parseInt(elegantNumberButton.getNumber());
+        Log.d("MYTAG", "Elegant Number value "+i);
+
+    }
+
 
     private void loadContent() {
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -70,6 +87,8 @@ public class FoodInfoActivity extends AppCompatActivity {
                 foodPrice.setText(food.getPrice());
                 foodName.setText(food.getName());
                 description.setText(food.getDescription());
+
+
             }
 
             @Override

@@ -3,6 +3,7 @@ package com.example.mirzo_golibsuvonberdiev.androidfinalproject.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.example.mirzo_golibsuvonberdiev.androidfinalproject.activities.FoodIn
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.interfaces.ItemClickListener;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.Food;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder.MenuViewHolder;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder.SpesicifViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,6 +33,8 @@ import butterknife.ButterKnife;
 public class SpecializedMenuFragment extends Fragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+
 
     RecyclerView.LayoutManager layoutManager;
 
@@ -67,14 +71,13 @@ public class SpecializedMenuFragment extends Fragment {
     }
 
     private void loadMenu() {
-        final FirebaseRecyclerAdapter<Food, MenuViewHolder> adapter = new FirebaseRecyclerAdapter<Food, MenuViewHolder>(Food.class, R.layout.menu_item, MenuViewHolder.class, reference) {
+        final FirebaseRecyclerAdapter<Food, SpesicifViewHolder> adapter = new FirebaseRecyclerAdapter<Food, SpesicifViewHolder>(Food.class, R.layout.menu_item_specific, SpesicifViewHolder.class, reference) {
             @Override
-            protected void populateViewHolder(MenuViewHolder viewHolder, Food model, int position) {
+            protected void populateViewHolder(SpesicifViewHolder viewHolder, Food model, int position) {
                 viewHolder.textViewName.setText(model.getName());
                 Glide.with(getActivity()).load(model.getImage())
                         .into(viewHolder.imageViewItem);
                 final Food clickedItem = model;
-
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
