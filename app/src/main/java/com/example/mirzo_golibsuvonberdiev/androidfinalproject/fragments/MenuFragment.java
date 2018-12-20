@@ -48,7 +48,7 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
         ButterKnife.bind(this, view);
         firebaseDatabase = FirebaseDatabase.getInstance();
         reference = firebaseDatabase.getReference("Food");
@@ -56,7 +56,6 @@ public class MenuFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
 
 
         // Inflate the layout for this fragment
@@ -77,11 +76,14 @@ public class MenuFragment extends Fragment {
                 final GeneralMeal clickedMeal = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     SpecializedMenuFragment specializedMenuFragment = SpecializedMenuFragment.newInstance(clickedMeal.getName());
+
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, specializedMenuFragment).commit();
+                        fragmentTransaction.replace(R.id.frame, specializedMenuFragment);
+                        fragmentTransaction.addToBackStack("TAG");
+                        fragmentTransaction.commit();
                         Toast.makeText(getActivity(), "" + clickedMeal.getName(), Toast.LENGTH_SHORT).show();
                     }
                 });

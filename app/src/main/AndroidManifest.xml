@@ -25,7 +25,8 @@
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.FoodInfoActivity" />
-        <activity android:name=".activities.OrderListActivity"></activity>
+        <activity android:name=".activities.OrderListActivity" />
+        <activity android:name=".activities.OrderHistoryActivity"></activity>
     </application>
 
 </manifest>

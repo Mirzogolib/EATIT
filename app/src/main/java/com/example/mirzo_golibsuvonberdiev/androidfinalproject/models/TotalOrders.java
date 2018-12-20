@@ -12,6 +12,7 @@ public class TotalOrders {
     private String address;
     private String total;
     private List<Order> orderList;
+    private String status;
 
     public TotalOrders() {
     }
@@ -22,6 +23,15 @@ public class TotalOrders {
         this.address = address;
         this.total = total;
         this.orderList = orderList;
+        this.status = "0";
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPhone() {

@@ -92,7 +92,7 @@ public class FoodInfoActivity extends AppCompatActivity {
                 Glide.with(FoodInfoActivity.this).load(food.getImage())
                         .into(foodImage);
                 collapsingToolbarLayout.setTitle(food.getName());
-                foodPrice.setText(food.getPrice());
+                foodPrice.setText(food.getPrice()+" sums");
                 foodName.setText(food.getName());
                 description.setText(food.getDescription());
 
