@@ -8,11 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.database.Database;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.Food;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,10 +46,10 @@ public class FoodInfoActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
 
 
-
-    String foodId;
+    String foodId, newFoodId, nameID;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    Food food;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,23 +58,28 @@ public class FoodInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         foodId = getIntent().getStringExtra("foodId");
-
+        nameID = getIntent().getStringExtra("generalId");
+        newFoodId = "Food/" + nameID + "/result/" + foodId;
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(foodId);
+        databaseReference = firebaseDatabase.getReference(newFoodId);
 
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
         loadContent();
 
 
-
     }
 
     @OnClick(R.id.btn_cart)
-    public void onClickCart(View view){
+    public void onClickCart(View view) {
+        new Database(this).addOrders(new Order(
+                foodId,
+                food.getName(),
+                elegantNumberButton.getNumber(),
+                food.getPrice()
+        ));
 
-        int i = Integer.parseInt(elegantNumberButton.getNumber());
-        Log.d("MYTAG", "Elegant Number value "+i);
+        Toast.makeText(this, "Order added to cart", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -80,7 +88,7 @@ public class FoodInfoActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Food food = dataSnapshot.getValue(Food.class);
+                food = dataSnapshot.getValue(Food.class);
                 Glide.with(FoodInfoActivity.this).load(food.getImage())
                         .into(foodImage);
                 collapsingToolbarLayout.setTitle(food.getName());

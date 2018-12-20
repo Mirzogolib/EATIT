@@ -19,12 +19,10 @@ import butterknife.OnClick;
 
 public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-
     @BindView(R.id.item_name)
     public TextView textViewName;
     @BindView(R.id.item_image)
     public ImageView imageViewItem;
-
 
 
     private ItemClickListener itemClickListener;

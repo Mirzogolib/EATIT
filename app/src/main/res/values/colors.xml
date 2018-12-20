@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#adbdf0</color>
     <color name="colorCustomBackTransparent">#00adbdf0</color>
     <color name="colorAccent">#616161</color>
+    <color name="custom">#adbdf0</color>
 </resources>

@@ -23,8 +23,9 @@
         <activity
             android:name=".activities.BaseActivity"
             android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".activities.FoodInfoActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.FoodInfoActivity" />
+        <activity android:name=".activities.OrderListActivity"></activity>
     </application>
 
 </manifest>

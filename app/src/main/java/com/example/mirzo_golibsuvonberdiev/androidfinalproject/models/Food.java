@@ -5,6 +5,7 @@ package com.example.mirzo_golibsuvonberdiev.androidfinalproject.models;
  */
 
 public class Food {
+    private String foodId;
     private String name;
     private String image;
     private String price;
@@ -13,11 +14,20 @@ public class Food {
     public Food() {
     }
 
-    public Food(String name, String image, String price, String description) {
+    public Food(String foodId, String name, String image, String price, String description) {
+        this.foodId = foodId;
         this.name = name;
         this.image = image;
         this.price = price;
         this.description = description;
+    }
+
+    public String getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 
     public String getName() {

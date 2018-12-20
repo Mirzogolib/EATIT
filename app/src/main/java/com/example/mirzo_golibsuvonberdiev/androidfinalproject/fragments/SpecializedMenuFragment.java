@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.activities.FoodInfoActivity;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.database.Database;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.interfaces.ItemClickListener;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.Food;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder.MenuViewHolder;
@@ -35,12 +36,20 @@ public class SpecializedMenuFragment extends Fragment {
     RecyclerView recyclerView;
 
 
-
     RecyclerView.LayoutManager layoutManager;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference reference;
     String name;
+    boolean isChecked;
+    FloatingActionButton floatingActionButton;
+
+    //favourite
+    Database localDatabase;
+    FirebaseRecyclerAdapter<Food, SpesicifViewHolder> adapter;
+
+    String path;
+    Food myFood;
 
 
     public static SpecializedMenuFragment newInstance(String name) {
@@ -60,7 +69,11 @@ public class SpecializedMenuFragment extends Fragment {
         name = getArguments().getString("name");
         Log.d("CHECK", name);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        reference = firebaseDatabase.getReference("Food/"+name+"/result");
+        path = "Food/" + name + "/result";
+        reference = firebaseDatabase.getReference(path);
+
+        localDatabase = new Database(getActivity());
+
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -71,23 +84,65 @@ public class SpecializedMenuFragment extends Fragment {
     }
 
     private void loadMenu() {
-        final FirebaseRecyclerAdapter<Food, SpesicifViewHolder> adapter = new FirebaseRecyclerAdapter<Food, SpesicifViewHolder>(Food.class, R.layout.menu_item_specific, SpesicifViewHolder.class, reference) {
+        adapter = new FirebaseRecyclerAdapter<Food, SpesicifViewHolder>(Food.class, R.layout.menu_item_specific, SpesicifViewHolder.class, reference) {
             @Override
-            protected void populateViewHolder(SpesicifViewHolder viewHolder, Food model, int position) {
+            protected void populateViewHolder(final SpesicifViewHolder viewHolder, final Food model, final int position) {
                 viewHolder.textViewName.setText(model.getName());
                 Glide.with(getActivity()).load(model.getImage())
                         .into(viewHolder.imageViewItem);
+
+                if (localDatabase.isFavourites(path + "/" + adapter.getRef(position).getKey()))
+                    viewHolder.favouriteButton.setImageResource(R.drawable.ic_favorite_white);
+
+
+                viewHolder.favouriteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!localDatabase.isFavourites(path + "/" + adapter.getRef(position).getKey())) {
+                            myFood = model;
+                            myFood.setFoodId(path + "/" + adapter.getRef(position).getKey());
+                            localDatabase.addToFavouritesWithObject(myFood);
+                            viewHolder.favouriteButton.setImageResource(R.drawable.ic_favorite_white);
+                            Toast.makeText(getContext(), "added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            localDatabase.deleteFromFavourites(path + "/" + adapter.getRef(position).getKey());
+                            viewHolder.favouriteButton.setImageResource(R.drawable.favourite_icon);
+                            Toast.makeText(getContext(), "deleted", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
                 final Food clickedItem = model;
+                isChecked = false;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        String key= getRef(position).getKey();
-                        Log.d("CHECK", "KEY is "+key);
+                        String key = getRef(position).getKey();
+                        Log.d("CHECK", "KEY is " + key);
                         Intent intent = new Intent(getActivity(), FoodInfoActivity.class);
-                        intent.putExtra("foodId", "Food/"+name+"/result/"+ key);
+                        intent.putExtra("foodId", key);
+                        intent.putExtra("generalId", name);
+//                        intent.putExtra("foodId", "Food/"+name+"/result/"+ key);
                         startActivity(intent);
                     }
                 });
+
+
+//                viewHolder.favouriteButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Log.d("MYTAG", "favourite clicked");
+//                        if (isChecked) {
+//                            isChecked = false;
+//                            floatingActionButton.setImageResource(R.drawable.favourite_icon);
+//                        } else {
+//                            isChecked = true;
+//                            floatingActionButton.setImageResource(R.drawable.ic_favorite_white);
+//                        }
+//                    }
+//                });
             }
         };
 
