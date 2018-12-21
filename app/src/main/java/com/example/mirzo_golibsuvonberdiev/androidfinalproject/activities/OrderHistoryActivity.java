@@ -1,12 +1,17 @@
 package com.example.mirzo_golibsuvonberdiev.androidfinalproject.activities;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.common.Common;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.interfaces.ItemClickListener;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.TotalOrders;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder.OrderHistoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -57,15 +62,23 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 viewHolder.orderStatus.setText(convertStatus(model.getStatus()));
                 viewHolder.orderAddress.setText(model.getAddress());
                 viewHolder.orderPhone.setText(model.getPhone());
+                changeColor(viewHolder, model.getStatus());
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Log.d("MYTAG", "clicked");
+                    }
+                });
 
             }
 
             private String convertStatus(String status) {
-                if (status.equals("0")){
+                if (status.equals("0")) {
+
                     return "Order uploaded";
-                }else if (status.equals("1")){
+                } else if (status.equals("1")) {
                     return "On the way";
-                }else{
+                } else {
                     return "Delivered";
                 }
 
@@ -74,5 +87,22 @@ public class OrderHistoryActivity extends AppCompatActivity {
         };
 
         recyclerView.setAdapter(adapter);
+    }
+
+    private void changeColor(OrderHistoryViewHolder viewHolder, String status) {
+        TextDrawable drawable;
+        if (status.equals("0")) {
+            drawable = TextDrawable.builder()
+                    .buildRound(" ", Color.RED);
+
+        } else if (status.equals("1")) {
+            drawable = TextDrawable.builder()
+                    .buildRound(" ", Color.BLUE);
+        } else {
+            drawable = TextDrawable.builder()
+                    .buildRound(" ", Color.GREEN);
+        }
+        viewHolder.coloredButton.setImageDrawable(drawable);
+
     }
 }

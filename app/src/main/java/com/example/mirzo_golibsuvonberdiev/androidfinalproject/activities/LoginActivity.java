@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.admin.AdminMainActivity;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.common.Common;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.User;
 import com.google.firebase.database.DataSnapshot;
@@ -59,10 +60,19 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         User user = dataSnapshot.child(username.getText().toString()).getValue(User.class);
                         if (user.getPassword().equals(password.getText().toString())) {
-                            Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
-                            Common.currentUser = user;
-                            startActivity(intent);
-                            finish();
+                            if (user.getType().equals("1")) {
+                                Log.d("ADMIN", "WELCOME TO ADMIN PAGE");
+                                Toast.makeText(LoginActivity.this, "Welcome to admin page", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                                Common.currentUser = user;
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+                                Common.currentUser = user;
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
                             Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                         }
@@ -78,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
-        }else {
+        } else {
             Toast.makeText(LoginActivity.this, "Enter all information", Toast.LENGTH_SHORT).show();
         }
     }

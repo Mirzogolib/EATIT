@@ -42,7 +42,7 @@ public class SpecializedMenuFragment extends Fragment {
     DatabaseReference reference;
     String name;
     boolean isChecked;
-    FloatingActionButton floatingActionButton;
+//    FloatingActionButton floatingActionButton;
 
     //favourite
     Database localDatabase;
@@ -124,25 +124,14 @@ public class SpecializedMenuFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), FoodInfoActivity.class);
                         intent.putExtra("foodId", key);
                         intent.putExtra("generalId", name);
+                        
 //                        intent.putExtra("foodId", "Food/"+name+"/result/"+ key);
                         startActivity(intent);
                     }
                 });
 
 
-//                viewHolder.favouriteButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.d("MYTAG", "favourite clicked");
-//                        if (isChecked) {
-//                            isChecked = false;
-//                            floatingActionButton.setImageResource(R.drawable.favourite_icon);
-//                        } else {
-//                            isChecked = true;
-//                            floatingActionButton.setImageResource(R.drawable.ic_favorite_white);
-//                        }
-//                    }
-//                });
+
             }
         };
 

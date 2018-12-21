@@ -62,7 +62,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/image_status"
+            android:id="@+id/quantity_ordered"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical|end"

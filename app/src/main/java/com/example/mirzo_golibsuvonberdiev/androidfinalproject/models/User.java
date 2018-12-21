@@ -8,6 +8,7 @@ public class User {
     private String name;
     private String password;
     private String phone;
+    private String type;
 
     public User() {
     }
@@ -16,8 +17,16 @@ public class User {
         this.name = name;
         this.password = password;
         this.phone = phone;
+        this.type = "0";
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;

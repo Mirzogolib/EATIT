@@ -26,7 +26,11 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.FoodInfoActivity" />
         <activity android:name=".activities.OrderListActivity" />
-        <activity android:name=".activities.OrderHistoryActivity"></activity>
+        <activity android:name=".activities.OrderHistoryActivity" />
+        <activity android:name=".admin.AdminMainActivity" />
+        <activity android:name=".admin.AdminOrderUpdate" />
+        <activity android:name=".admin.AdminFoodActivity" />
+        <activity android:name=".admin.AdminFoodListActivity"></activity>
     </application>
 
 </manifest>

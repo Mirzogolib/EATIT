@@ -34,7 +34,7 @@ class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     @BindView(R.id.ordered_item_price)
     public TextView orderedItemPrice;
     @BindView(R.id.quantity_ordered)
-    ImageView quantity;
+    public ImageView quantity;
 
     private ItemClickListener itemClickListener;
 

@@ -2,6 +2,7 @@ package com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
@@ -26,6 +27,9 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder implements V
     public TextView orderPhone;
     @BindView(R.id.ordered_address)
     public TextView orderAddress;
+    @BindView(R.id.quantity_ordered)
+    public ImageView coloredButton;
+
 
 
     public OrderHistoryViewHolder(View itemView) {
@@ -42,6 +46,6 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder implements V
 
     @Override
     public void onClick(View view) {
-
+        itemClickListener.onClick(view, getAdapterPosition(), false);
     }
 }

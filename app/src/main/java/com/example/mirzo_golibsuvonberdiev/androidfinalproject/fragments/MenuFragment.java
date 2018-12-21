@@ -1,6 +1,7 @@
 package com.example.mirzo_golibsuvonberdiev.androidfinalproject.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.R;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.activities.BaseActivity;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.admin.AdminFoodListActivity;
+import com.example.mirzo_golibsuvonberdiev.androidfinalproject.common.Common;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.interfaces.ItemClickListener;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.models.GeneralMeal;
 import com.example.mirzo_golibsuvonberdiev.androidfinalproject.viewHolder.MenuViewHolder;
@@ -38,6 +41,7 @@ public class MenuFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference reference;
     FragmentTransaction fragmentTransaction;
+    FirebaseRecyclerAdapter<GeneralMeal, MenuViewHolder> adapter;
 
     public static MenuFragment newInstance() {
         MenuFragment menuFragment = new MenuFragment();
@@ -66,7 +70,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void loadMenu() {
-        FirebaseRecyclerAdapter<GeneralMeal, MenuViewHolder> adapter1 = new FirebaseRecyclerAdapter<GeneralMeal, MenuViewHolder>(GeneralMeal.class, R.layout.menu_item, MenuViewHolder.class, reference) {
+        adapter = new FirebaseRecyclerAdapter<GeneralMeal, MenuViewHolder>(GeneralMeal.class, R.layout.menu_item, MenuViewHolder.class, reference) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, GeneralMeal model, int position) {
                 viewHolder.textViewName.setText(model.getName());
@@ -74,23 +78,32 @@ public class MenuFragment extends Fragment {
                 Glide.with(getActivity()).load(model.getImage())
                         .into(viewHolder.imageViewItem);
                 final GeneralMeal clickedMeal = model;
+                Log.d("TAG", clickedMeal.getName());
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     SpecializedMenuFragment specializedMenuFragment = SpecializedMenuFragment.newInstance(clickedMeal.getName());
 
+
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, specializedMenuFragment);
-                        fragmentTransaction.addToBackStack("TAG");
-                        fragmentTransaction.commit();
-                        Toast.makeText(getActivity(), "" + clickedMeal.getName(), Toast.LENGTH_SHORT).show();
+                        if (Common.currentUser.getType().equals("1")) {
+                            Intent intent = new Intent(getActivity(), AdminFoodListActivity.class);
+                            intent.putExtra("name", clickedMeal.getName());
+                            startActivity(intent);
+                        } else {
+
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.frame, specializedMenuFragment);
+                            fragmentTransaction.addToBackStack("TAG");
+                            fragmentTransaction.commit();
+                            Toast.makeText(getActivity(), "" + clickedMeal.getName(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
         };
 
-        recyclerView.setAdapter(adapter1);
+        recyclerView.setAdapter(adapter);
     }
 
 }

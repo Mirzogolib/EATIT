@@ -17,13 +17,13 @@ public class TotalOrders {
     public TotalOrders() {
     }
 
-    public TotalOrders(String phone, String name, String address, String total, List<Order> orderList) {
+    public TotalOrders(String phone, String name, String address, String total, List<Order> orderList, String status) {
         this.phone = phone;
         this.name = name;
         this.address = address;
         this.total = total;
         this.orderList = orderList;
-        this.status = "0";
+        this.status = status;
     }
 
     public String getStatus() {
