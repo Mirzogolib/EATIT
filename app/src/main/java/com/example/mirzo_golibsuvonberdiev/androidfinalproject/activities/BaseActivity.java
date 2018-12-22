@@ -47,10 +47,6 @@ public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.user_info)
     ImageButton userButton;
 
-//    TextView textViewFullName;
-//    NavigationView navigationView;
-
-
     FragmentTransaction fragmentTransaction;
     MenuFragment menuFragment;
     FavouriteFragment favouriteFragment;
@@ -63,26 +59,8 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
-
-//        navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
-
-//        setNameUser();
         initFragments();
         showFragment(menuFragment);
-
-
-
-
-
-
 
     }
 
@@ -98,14 +76,6 @@ public class BaseActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame, fragment).commit();
 
     }
-
-
-//    private void setNameUser() {
-//        View header = navigationView.getHeaderView(0);
-//        textViewFullName = header.findViewById(R.id.txt_full_name);
-//        textViewFullName.setText(Common.currentUser.getName());
-//    }
-
 
 
 
@@ -129,65 +99,5 @@ public class BaseActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.base, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
-
 
 }

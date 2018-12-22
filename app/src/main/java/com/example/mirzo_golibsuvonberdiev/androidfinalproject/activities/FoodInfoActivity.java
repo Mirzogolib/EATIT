@@ -70,8 +70,11 @@ public class FoodInfoActivity extends AppCompatActivity {
 
     }
 
+
     @OnClick(R.id.btn_cart)
     public void onClickCart(View view) {
+
+        // create new database and use addOrders Method in order to create order
         new Database(this).addOrders(new Order(
                 foodId,
                 food.getName(),
@@ -83,6 +86,8 @@ public class FoodInfoActivity extends AppCompatActivity {
 
     }
 
+
+    // loading all food information function
 
     private void loadContent() {
         databaseReference.addValueEventListener(new ValueEventListener() {
